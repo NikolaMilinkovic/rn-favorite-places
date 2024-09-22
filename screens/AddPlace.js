@@ -1,7 +1,9 @@
 import React from 'react'
+import PlaceForm from '../components/places/PlaceForm'
 
 function AddPlace() {
   return (
+    <PlaceForm/>
   )
 }
 
