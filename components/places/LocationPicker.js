@@ -3,10 +3,10 @@ import { StyleSheet, View, Alert, Image, Text } from 'react-native'
 import OutlinedButton from '../ui/OutlinedButton'
 import { Colors } from '../../constants/colors'
 import { getCurrentPositionAsync, PermissionStatus, useForegroundPermissions } from 'expo-location'
-import { getMapPreview } from '../../util/location'
+import { getAddress, getMapPreview } from '../../util/location'
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native'
 
-function LocationPicker() {
+function LocationPicker({ onPickLocation }) {
   const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
   const [pickedLocation, setPickedLocation] = useState();
   const navigation = useNavigation();
@@ -20,6 +20,17 @@ function LocationPicker() {
       setPickedLocation( mapPickedLocation );
     }
   }, [route, isFocused])
+
+  useEffect(() => {
+    async function handleLocation(){
+      if(pickedLocation){
+        const address = await getAddress(pickedLocation.lat, pickedLocation.lng)
+        onPickLocation({...pickedLocation, address})
+      }
+    }
+
+    handleLocation();
+  }, [pickedLocation, onPickLocation])
 
   async function verifyPermissions(){
     if(locationPermissionInformation.status === PermissionStatus.UNDETERMINED){
@@ -87,7 +98,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginBottom: 44,
+    marginBottom: 10
   },
   image: {
     width: '100%',

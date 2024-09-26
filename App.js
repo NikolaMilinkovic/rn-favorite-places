@@ -6,9 +6,15 @@ import AddPlace from './screens/AddPlace';
 import IconButton from './components/ui/IconButton';
 import { Colors } from './constants/colors';
 import Map from './screens/Map';
+import { useEffect } from 'react';
+import { init } from './util/database';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    init();
+  })
+
   function getAddPlaceButton(tintColor, navigation){
     return <IconButton 
             icon='add' 
