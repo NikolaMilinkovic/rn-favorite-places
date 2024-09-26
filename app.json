@@ -29,6 +29,12 @@
         {
           "cameraPermission": "The app accesses your camera in order for you to take photos of your favorite places."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
       ]
     ]
   }
