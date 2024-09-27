@@ -86,3 +86,29 @@ export async function clearPlaces() {
     throw new Error('Error deleting all entries from the database => ' + error);
   }
 }
+
+export async function fetchPlaceDetails(id){
+  const database = await getDatabase();
+  try{
+    const query = 'SELECT * FROM places WHERE id = ?';
+    const place = await database.getFirstAsync(query, [id]);
+    console.log(`> Fetching place data via id=${id} was successfull.`)
+    console.log(place);
+
+    // const constructPlace = new Place(
+    //   place.title,
+    //   place.imageUri,
+    //   {
+    //     address: place.address,
+    //     lat: place.lat,
+    //     lng: place.lng
+    //   },
+    //   place.id
+    // );
+
+    return place;
+  } catch(error) {
+    console.log('> Error fetching data for selected place => ' + error);
+    throw new Error('Error fetching data for selected place => ' + error)
+  }
+}
